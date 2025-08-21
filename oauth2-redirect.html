@@ -1,1 +1,34 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OAuth2 Redirect</title>
+<script>
+  // التقاط الـ access token من URL بعد إعادة التوجيه
+  const params = new URLSearchParams(window.location.hash.substring(1));
+  const accessToken = params.get("access_token");
+
+  if (accessToken) {
+    // عرض التوكن في console للتأكد
+    console.log("Discord Access Token:", accessToken);
+
+    // حفظ التوكن في localStorage (يمكن تعديله للإرسال للإضافة)
+    localStorage.setItem("discord_access_token", accessToken);
+
+    // رسالة للمستخدم
+    document.getElementById("status").textContent = "Logged in! Token captured successfully.";
+  } else {
+    document.getElementById("status").textContent = "No token found. OAuth2 may have failed.";
+  }
+</script>
+<style>
+  body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+  h2 { color: #5865F2; }
+</style>
+</head>
+<body>
+<h2>OAuth2 Redirect</h2>
+<p id="status">Waiting for token...</p>
+</body>
+</html>
