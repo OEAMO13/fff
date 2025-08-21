@@ -1,22 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>OAuth2 Redirect</title>
-<script>
-const params = new URLSearchParams(window.location.hash.substring(1));
-const accessToken = params.get("access_token");
-if (accessToken) {
-    localStorage.setItem("discord_access_token", accessToken);
-    alert("Logged in! Token captured successfully.");
-    window.close();
-} else {
-    alert("No token found. OAuth2 may have failed.");
-}
-</script>
+  <meta charset="UTF-8">
+  <title>OAuth2 Redirect</title>
 </head>
 <body>
-<h3>OAuth2 Redirect</h3>
-<p>Waiting for token...</p>
+  <h3>OAuth2 Redirect</h3>
+  <p>Waiting for token...</p>
+
+  <script>
+    // ناخذ الهاش من الرابط (#access_token=...)
+    const params = new URLSearchParams(window.location.hash.substring(1));
+    const token = params.get("access_token");
+
+    if (token) {
+      // نخزن التوكن في localStorage عشان تقدر تستعمله بعدين
+      localStorage.setItem("discord_access_token", token);
+
+      // نعرض رسالة تأكيد
+      document.body.innerHTML = `
+        <h3>✅ Logged in successfully!</h3>
+        <p>Token saved to localStorage.</p>
+      `;
+
+      // لو تبيه يغلق النافذة مباشرة
+      // window.close();
+    } else {
+      document.body.innerHTML = `
+        <h3>❌ No token found</h3>
+        <p>OAuth2 may have failed.</p>
+      `;
+    }
+  </script>
 </body>
 </html>
