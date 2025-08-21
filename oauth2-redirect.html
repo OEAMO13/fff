@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>OAuth2 Redirect</title>
 <script>
-const params = new URLSearchParams(window.location.hash.substring(1));
-const accessToken = params.get("access_token");
-if(accessToken){
-    localStorage.setItem("discord_access_token", accessToken);
-    alert("Logged in! Token captured.");
-}
+  // التقاط access token من URL بعد إعادة التوجيه
+  const params = new URLSearchParams(window.location.hash.substring(1));
+  const accessToken = params.get("access_token");
+  if (accessToken) {
+      localStorage.setItem("discord_access_token", accessToken);
+      alert("Logged in! Token captured successfully.");
+      window.close(); // يغلق النافذة تلقائياً
+  } else {
+      alert("No token found. OAuth2 may have failed.");
+  }
 </script>
 </head>
 <body>
 <h3>OAuth2 Redirect</h3>
-<p>If you see this, OAuth2 redirect worked.</p>
+<p>Waiting for token...</p>
 </body>
 </html>
